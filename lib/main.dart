@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
-import 'onboarding_screen.dart';
+import 'package:provider/provider.dart';
+import 'screens/home_screen.dart';
+import 'theme_provider.dart';
 
 void main() {
-  runApp(MyNotesApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: NoteApp(),
+    ),
+  );
 }
 
-class MyNotesApp extends StatelessWidget {
+class NoteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
-      title: 'My Notes',
+      title: 'Note App',
       debugShowCheckedModeBanner: false,
+      themeMode: themeProvider.themeMode,
       theme: ThemeData(
         primarySwatch: Colors.orange,
-        fontFamily: 'Poppins',
+        brightness: Brightness.light,
       ),
-      home: OnboardingScreen(),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.orange,
+        brightness: Brightness.dark,
+      ),
+      home: HomeScreen(),
     );
   }
 }
